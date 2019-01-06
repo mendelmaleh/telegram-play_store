@@ -10,6 +10,7 @@ import (
 type Config struct {
 	Me      int64
 	Updates int64
+	Domain	string
 	Token   string
 	Link    string
 	Key     string

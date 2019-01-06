@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"net/http"
 
 	"github.com/go-telegram-bot-api/telegram-bot-api"
 )
@@ -23,15 +24,20 @@ func main() {
 	bot.Debug = false
 	fmt.Printf("Authorized on account %s\n", bot.Self.UserName)
 
+	_, err = bot.SetWebhook(tgbotapi.NewWebhookWithCert(
+		"https://" + config.Domain + ":8443/" + bot.Token, "cert.pem"))
+	if err != nil {
+		panic(err)
+	}
+
+	updates := bot.ListenForWebhook("/" + bot.Token)
+	go http.ListenAndServeTLS("0.0.0.0:8443", "cert.pem", "key.pem", nil)
+
 	msg := tgbotapi.NewMessage(config.Updates, "Starting...")
 	msg.DisableNotification = true
 	if _, err := bot.Send(msg); err != nil {
 		panic(err)
 	}
-
-	u := tgbotapi.NewUpdate(0)
-	u.Timeout = 60
-	updates, err := bot.GetUpdatesChan(u)
 
 	for update := range updates {
 		if update.InlineQuery != nil {
