@@ -46,10 +46,4 @@ func main() {
 				"@"+update.ChosenInlineResult.From.String()+" searched "+update.ChosenInlineResult.Query))
 		}
 	}
-
-	/*
-		r := search(svc, config.Cx, "niagara launcher")
-		fmt.Println(r)
-		fmt.Println(len(r))
-	*/
 }

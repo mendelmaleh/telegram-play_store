@@ -55,20 +55,3 @@ func search(svc *customsearch.Service, cx, query string) []map[string]interface{
 	}
 	return results
 }
-
-/*
-func getPkgs(svc *customsearch.Service, cx, query string) (urls []string) {
-	results := search(query, svc, cx)
-	for _, v := range results {
-		u, err := url.Parse(v)
-		if err != nil {
-			panic(err)
-		}
-		p, _ := url.ParseQuery(u.RawQuery)
-		id := p["id"][0]
-		if !stringInSlice(id, urls) {
-			urls = append(urls, id)
-		}
-	}
-	return urls
-}*/
