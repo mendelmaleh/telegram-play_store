@@ -17,13 +17,13 @@ type Config struct {
 	Cx      string
 }
 
-func stringInSlice(s, k string, sl []map[string]interface{}) bool {
-	for _, v := range sl {
+func stringInSlice(s, k string, sl []map[string]interface{}) int {
+	for i, v := range sl {
 		if v[k] == s {
-			return true
+			return i
 		}
 	}
-	return false
+	return -1
 }
 
 func deleteKeys(m map[string]interface{}, k []string) {
